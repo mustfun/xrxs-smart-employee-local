@@ -63,6 +63,10 @@ jobs:
 
       - run: npm ci
 
+      - name: Sync Tauri crate versions
+        working-directory: src-tauri
+        run: cargo update
+
       # tauri-action 自动执行 beforeBuildCommand (npm run build) + cargo build
       - name: Build desktop app
         uses: tauri-apps/tauri-action@v0
