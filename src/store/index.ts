@@ -89,6 +89,9 @@ export type {
 export { followupQueueStore, useFollowupQueue } from './followupQueueStore'
 export type { QueuedFollowupDraft } from './followupQueueStore'
 
+export { moduleStore, useModuleDirectories, MODULE_DEFINITIONS } from './moduleStore'
+export type { ModuleDefinition, ModuleDirectoryMap } from './moduleStore'
+
 export {
   updateStore,
   useUpdateStore,

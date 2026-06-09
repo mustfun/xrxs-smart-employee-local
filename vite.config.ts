@@ -23,6 +23,7 @@ function katexWoff2Only() {
   }
 }
 
+
 // https://vite.dev/config/
 export default defineConfig({
   base: process.env.VITE_BASE_PATH || '/',
@@ -53,6 +54,8 @@ export default defineConfig({
   clearScreen: false,
 
   server: {
+    // 开发服务器端口
+    port: 5666,
     // Tauri mobile dev 需要通过网络访问 Vite dev server
     host: process.env.TAURI_DEV_HOST || false,
     // 避免端口冲突

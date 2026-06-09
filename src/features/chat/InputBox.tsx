@@ -13,6 +13,7 @@ import {
 } from '../mention'
 import { SlashCommandMenu, type SlashCommandMenuHandle } from '../slash-command'
 import { InputToolbar } from './input/InputToolbar'
+import { CategoryBar } from './input/CategoryBar'
 import type { ModelSelectorHandle } from './ModelSelector'
 import { InputFooter } from './input/InputFooter'
 import { FloatingActions, CollapsedCapsule } from './input/InputActions'
@@ -1200,6 +1201,9 @@ function InputBoxComponent({
 
           {!isCollapsed && (
             <>
+              {/* Category Bar — 目录选项，在输入框外部上方 */}
+              <CategoryBar />
+
               {/* Wrapper — 菜单在 glass 容器外，避免嵌套 backdrop-filter 导致模糊失效 */}
               <div className="relative z-30">
                 {/* @ Mention Menu */}

@@ -1,7 +1,7 @@
 {
-  "name": "opencodeui",
+  "name": "xrxs-ai",
   "version": "0.6.17",
-  "description": "A third-party web frontend for OpenCode",
+  "description": "XRXS AI",
   "license": "GPL-3.0-only",
   "type": "module",
   "scripts": {

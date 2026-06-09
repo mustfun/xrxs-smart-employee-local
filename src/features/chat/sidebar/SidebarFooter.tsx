@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { createPortal } from 'react-dom'
 import { ShareDialog } from '../ShareDialog'
 import { ContextDetailsDialog } from './ContextDetailsDialog'
+import { ModuleSettingsDialog } from '../../settings/ModuleSettingsDialog'
 import {
   CogIcon,
   SunIcon,
@@ -11,6 +12,7 @@ import {
   MaximizeIcon,
   MinimizeIcon,
   ShareIcon,
+  FolderIcon,
 } from '../../../components/Icons'
 import { CircularProgress } from '../../../components/CircularProgress'
 import { formatTokens, formatCost, useTheme } from '../../../hooks'
@@ -81,6 +83,7 @@ export function SidebarFooter({ showLabels, connectionState, stats, hasMessages,
   const [menuPos, setMenuPos] = useState({ top: 0, left: 0, width: 260, fromBottom: false })
   const [shareDialogOpen, setShareDialogOpen] = useState(false)
   const [contextDialogOpen, setContextDialogOpen] = useState(false)
+  const [moduleDialogOpen, setModuleDialogOpen] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
   const prevShowLabelsRef = useRef(showLabels)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -324,6 +327,17 @@ export function SidebarFooter({ showLabels, connectionState, stats, hasMessages,
               <CogIcon size={14} />
               <span>{t('sidebar.settings')}</span>
             </button>
+
+            <button
+              onClick={() => {
+                closeMenu()
+                setModuleDialogOpen(true)
+              }}
+              className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-[length:var(--fs-sm)] text-text-300 hover:text-text-100 hover:bg-bg-200/50 transition-colors text-left"
+            >
+              <FolderIcon size={14} />
+              <span>{t('sidebar.moduleSettings', '模块设置')}</span>
+            </button>
           </div>
 
           {/* Connection Status */}
@@ -387,6 +401,10 @@ export function SidebarFooter({ showLabels, connectionState, stats, hasMessages,
         isOpen={contextDialogOpen}
         onClose={() => setContextDialogOpen(false)}
         contextLimit={stats.contextLimit}
+      />
+      <ModuleSettingsDialog
+        isOpen={moduleDialogOpen}
+        onClose={() => setModuleDialogOpen(false)}
       />
     </div>
   )

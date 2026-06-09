@@ -181,7 +181,7 @@ export function useChatSession({
       const session = sessions.find(s => s.id === sessionId)
       if (session?.title) return session.title
       if (sessionId) return `Session ${sessionId.slice(0, 6)}`
-      return 'OpenCode'
+      return 'XRXS智能员工'
     },
     [sessions],
   )
@@ -511,20 +511,28 @@ export function useChatSession({
   }, [routeSessionId, effectiveDirectory])
 
   // agents 列表加载后，校验当前选中的 agent 是否存在于列表中
+  const agentInitializedRef = useRef(false)
   useEffect(() => {
     if (agents.length === 0) return
     const primaryAgents = agents.filter(a => a.mode !== 'subagent' && !a.hidden)
     if (primaryAgents.length === 0) return
 
     // 当前选中的 agent 在列表中存在就不动
-    if (selectedAgent && primaryAgents.some(a => a.name === selectedAgent)) return
+    if (selectedAgent && primaryAgents.some(a => a.name === selectedAgent)) {
+      agentInitializedRef.current = true
+      return
+    }
 
-    // 否则选第一个 primary agent
-    const frameId = requestAnimationFrame(() => {
-      setSelectedAgent(primaryAgents[0].name)
-    })
+    // 已经初始化过且当前选中有效，不再自动切换
+    if (agentInitializedRef.current && selectedAgent) {
+      return
+    }
 
-    return () => cancelAnimationFrame(frameId)
+    // 优先选中「日常业务排查」，找不到则选第一个 primary agent
+    const preferredAgent = primaryAgents.find(a => a.name === '日常业务排查')
+    const fallback = preferredAgent ?? primaryAgents[0]
+    agentInitializedRef.current = true
+    setSelectedAgent(fallback.name)
   }, [agents, selectedAgent, setSelectedAgent])
 
   // Load child sessions and pending permissions on session change

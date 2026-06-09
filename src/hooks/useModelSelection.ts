@@ -32,6 +32,14 @@ interface UseModelSelectionReturn {
   ) => void
 }
 
+// 默认模型名称偏好 — 在模型列表加载后自动匹配
+const PREFERRED_DEFAULT_MODEL_NAME = 'DeepSeek V4 Flash Free'
+
+function findPreferredDefaultModel(models: ModelInfo[]): ModelInfo | undefined {
+  const lower = PREFERRED_DEFAULT_MODEL_NAME.toLowerCase()
+  return models.find(m => m.name.toLowerCase().includes(lower))
+}
+
 export function useModelSelection({ models, sessionId = null }: UseModelSelectionOptions): UseModelSelectionReturn {
   const sessionSelection = sessionId ? getSessionModelSelection(sessionId) : undefined
   const initialSessionSelection = sessionId ? getSessionModelSelection(sessionId) : undefined
@@ -61,6 +69,22 @@ export function useModelSelection({ models, sessionId = null }: UseModelSelectio
   const persistedModel = selectedModelKey ? findModelByKey(models, selectedModelKey) : undefined
   const currentModel = useMemo(() => persistedModel ?? models[0], [models, persistedModel])
   const resolvedModelKey = currentModel ? getModelKey(currentModel) : null
+
+  // 当模型列表加载完成、且没有已保存的偏好时，自动选中默认偏好模型
+  const hasExplicitSelectionRef = useRef(!!(initialSessionSelection || serverStorage.get(STORAGE_KEY_SELECTED_MODEL)))
+  useEffect(() => {
+    if (hasExplicitSelectionRef.current) return
+    if (models.length === 0) return
+    const preferred = findPreferredDefaultModel(models)
+    if (preferred) {
+      const key = getModelKey(preferred)
+      setSelection({
+        selectedModelKey: key,
+        selectedVariant: getModelVariantPref(key),
+      })
+      hasExplicitSelectionRef.current = true
+    }
+  }, [models])
   const resolvedSelectedVariant = useMemo(() => {
     if (!resolvedModelKey) return undefined
     if (persistedModel && selectedModelKey === resolvedModelKey) return selectedVariant
@@ -121,6 +145,8 @@ export function useModelSelection({ models, sessionId = null }: UseModelSelectio
   // 切换模型
   const handleModelChange = useCallback(
     (modelKey: string, _model: ModelInfo) => {
+      hasExplicitSelectionRef.current = true
+
       // 先保存当前模型的 variant 偏好
       if (resolvedModelKey && resolvedSelectedVariant) {
         saveModelVariantPref(resolvedModelKey, resolvedSelectedVariant)

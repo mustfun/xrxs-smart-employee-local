@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "OpenCode",
+  "productName": "XRXS AI",
   "version": "0.6.17",
-  "identifier": "com.opencodeui.app",
+  "identifier": "com.xrxsai.app",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
@@ -15,7 +15,7 @@
       {
         "label": "main",
         "create": false,
-        "title": "OpenCode",
+        "title": "XRXS AI",
         "width": 800,
         "height": 600,
         "titleBarStyle": "Overlay",

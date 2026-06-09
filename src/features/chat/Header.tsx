@@ -137,9 +137,9 @@ export function Header({
   const isCompact = presentation.isCompact
 
   useEffect(() => {
-    document.title = currentSessionTitle ? `${currentSessionTitle} - OpenCode` : 'OpenCode'
+    document.title = currentSessionTitle ? `${currentSessionTitle} - XRXS智能员工` : 'XRXS智能员工'
     return () => {
-      document.title = 'OpenCode'
+      document.title = 'XRXS智能员工'
     }
   }, [currentSessionTitle])
 
