@@ -1,4 +1,4 @@
-package com.opencodeui.app
+package com.xrxsai.app
 
 import android.content.Context
 import android.graphics.Color

@@ -44,6 +44,10 @@ vi.mock('./input/InputToolbar', () => ({
   ),
 }))
 
+vi.mock('./input/CategoryBar', () => ({
+  CategoryBar: () => null,
+}))
+
 vi.mock('./input/InputFooter', () => ({
   InputFooter: () => null,
 }))
