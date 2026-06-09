@@ -170,7 +170,7 @@ jobs:
           SIGNED_APK=$(find src-tauri/gen/android/app/build/outputs/apk -path '*/release/*-signed*' -name '*.apk' -type f 2>/dev/null | head -1)
           RELEASE_APK=$(find src-tauri/gen/android/app/build/outputs/apk -path '*/release/*.apk' -name '*.apk' -type f 2>/dev/null | head -1)
           APK_PATH="${SIGNED_APK:-$RELEASE_APK}"
-          DEST="OpenCodeUI-${VERSION}-android-${{ matrix.label }}.apk"
+          DEST="XRXSAI-${VERSION}-android-${{ matrix.label }}.apk"
 
           if $BT/apksigner verify "$APK_PATH" 2>/dev/null; then
             cp "$APK_PATH" "$DEST"
@@ -231,7 +231,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name: 'OpenCodeUI ${{ github.ref_name }}'
+          name: 'XRXS AI ${{ github.ref_name }}'
           body_path: /tmp/release-body.md
           files: artifacts/*
           draft: false
