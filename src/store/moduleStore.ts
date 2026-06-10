@@ -18,6 +18,8 @@ export const MODULE_DEFINITIONS: ModuleDefinition[] = [
   { id: 'account', label: '账户' },
   { id: 'mobile', label: '移动端' },
   { id: 'notification', label: '通知' },
+  { id: 'docking', label: '对接' },
+  { id: 'other', label: '其他' },
 ]
 
 export type ModuleDirectoryMap = Record<string, string>
